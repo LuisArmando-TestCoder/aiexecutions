@@ -16,6 +16,7 @@
     import SoftTitle from '../components/SoftTitle/SoftTitle.svelte';
     import SmoothScrollWrapper from '../components/SmoothScrollWrapper/SmoothScrollWrapper.svelte';
     import Header from '../components/Header/Header.svelte';
+    import GridLinks from '../components/GridLinks/GridLinks.svelte';
 
   /* ------------------------------------------------------------------
    * State                                                              
@@ -176,6 +177,15 @@
   </Page>
   <div style="{$loaded ? '' : 'display: none'}">
     <Content />
+  </div>
+
+  <div id="us">
+    <GridLinks items={[
+      { url: "https://aibanewsletter.club/", text: "Engagement AI" },
+      { url: "https://github.com/LuisArmando-TestCoder/scientia", text: "AI Philosopher" },
+      { url: "https://github.com/LuisArmando-TestCoder/The-Equalitarian", text: "Recursive Maths" },
+      { url: "https://github.com/LuisArmando-TestCoder/scene-preset", text: "3D Web Preset" },
+    ]}/>
   </div>
 </SmoothScrollWrapper>
   

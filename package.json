@@ -42,6 +42,7 @@
     "@tsconfig/svelte": "^5.0.4",
     "@types/nearest-color": "^0.4.1",
     "@types/qrcode": "^1.5.5",
+    "@types/three": "^0.178.1",
     "publint": "^0.3.2",
     "sass": "^1.85.1",
     "sass-embedded": "^1.85.1",

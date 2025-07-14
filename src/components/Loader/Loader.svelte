@@ -49,6 +49,7 @@
         user-select: none;
         pointer-events: none;
         --color: white;
+        height: 100vh;
     }
 
 	.loader-container {

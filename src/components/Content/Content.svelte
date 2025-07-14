@@ -75,6 +75,11 @@
   background-position: left;
   background-attachment: fixed;
   // filter: grayscale(1);
+
+  @media (max-width: 768px) {
+    height: 0;
+    min-height: 0;
+  }
 }
 
 /* Example Pexels image backgrounds – swap for your own */
