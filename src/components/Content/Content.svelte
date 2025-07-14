@@ -40,14 +40,9 @@
         <h2>What are we?</h2>
         <p>
             We are a private equity firm. But instead of giving you money, we
-            give you systems, automation, and execution, then scale your business.
+            give you systems, automation, and execution,and then scale your business.
         </p>
-        <p>Capital scales effort. Systems scale leverage.</p>
-        <i>
-            This lets your team spend less time repeating tasks and more time
-            solving real problems, finding newer ideas, and moving
-            forward.
-        </i>
+        <p>Sure, capital scales effort, but systems, systems scale leverage.</p>
     </div>
 </article>
 

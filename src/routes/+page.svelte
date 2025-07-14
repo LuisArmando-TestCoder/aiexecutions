@@ -178,7 +178,9 @@
   </div>
 
 </Page>
-<Content />
+<div style="{$loaded ? '' : 'display: none'}">
+  <Content />
+</div>
 
 <style lang="scss">
   @use "./styles/everything.scss";
