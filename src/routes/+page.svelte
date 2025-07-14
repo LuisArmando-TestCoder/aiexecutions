@@ -200,7 +200,7 @@
 
   :global(.title) {
     & :global(span span) {
-      font-size: min(10vw, 10vh) !important;
+      font-size: min(5vw, 5vh) !important;
       text-shadow: 1px 0 black;
     }
   }

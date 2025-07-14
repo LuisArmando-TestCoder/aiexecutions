@@ -1,48 +1,51 @@
-import * as THREE from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
-import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from 'three';
 
-const loaders = {
-  GLTFLoader,
-  FBXLoader
+type GLTF = {
+  scene: THREE.Group;
+  animations: THREE.AnimationClip[];
 };
 
-export default (
-  path: string,
+export default async (
+  path: string
 ): Promise<{
   object3D: THREE.Group;
   animations: Map<string, (animationSpeed: number) => THREE.AnimationAction>;
 }> => {
+  const extension = path.split('.').pop()?.toLowerCase();
+
+  const [gltfModule, fbxModule] = await Promise.all([
+    import('three/examples/jsm/loaders/GLTFLoader.js'),
+    import('three/examples/jsm/loaders/FBXLoader.js')
+  ]);
+
+  const loaders: Record<string, any> = {
+    gltf: gltfModule.GLTFLoader,
+    glb: gltfModule.GLTFLoader,
+    fbx: fbxModule.FBXLoader
+  };
+
+  const LoaderClass = loaders[extension ?? ''];
+  if (!LoaderClass) {
+    throw new Error(`Unsupported file extension: ${extension}`);
+  }
+
   return new Promise((resolve, reject) => {
-    const extension = path.split(".").pop()?.toLowerCase();
-
-    let LoaderClass: typeof GLTFLoader | typeof FBXLoader;
-    if (extension === "gltf" || extension === "glb") {
-      LoaderClass = GLTFLoader;
-    } else if (extension === "fbx") {
-      LoaderClass = FBXLoader;
-    } else {
-      reject(new Error(`Unsupported file extension: ${extension}`));
-      return;
-    }
-
     const loader = new LoaderClass();
 
     loader.load(
       path,
-      (object) => {
+      (object: any) => {
         let model: THREE.Group;
         let animationsArray: THREE.AnimationClip[];
 
         if (object instanceof THREE.Group) {
           model = object;
           animationsArray = [];
-        } else if ("scene" in object) {
+        } else if ('scene' in object) {
           model = (object as GLTF).scene;
           animationsArray = (object as GLTF).animations;
         } else {
-          reject(new Error("Unsupported object type loaded."));
+          reject(new Error('Unsupported object type loaded.'));
           return;
         }
 
