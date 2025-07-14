@@ -14,6 +14,7 @@
   import MarkdownText from '../components/systems/texts/MarkdownText/MarkdownText.svelte';
   import Content from '../components/Content/Content.svelte';
     import SoftTitle from '../components/SoftTitle/SoftTitle.svelte';
+    import SmoothScrollWrapper from '../components/SmoothScrollWrapper/SmoothScrollWrapper.svelte';
 
   /* ------------------------------------------------------------------
    * State                                                              
@@ -102,80 +103,86 @@
 
   onDestroy(() => cleanup());
 </script>
-
 <ChosenShader />
 <ThemeChanger visible={false} />
 
-<Canvas
-  setup={async (state: typeof canvasesState) => {
-    const { object3D } = await Model("./models/modern_vase/scene.gltf");
-
-    objects = ("A" /* AO */.split("").map((_, i) => {
-      const obj = object3D.clone();
-      obj.position.y += 2.5;
-      obj.rotation.x = Math.PI / 2 + Math.PI * (i % 2);
-      obj.scale.set(the_scale * 2, the_scale * 2, the_scale * 2);
-      obj.position.z += 75 + the_scale / 4 + i * (the_scale / 2) + (the_scale / 4) * (i % 2);
-
-      state.scene.add(obj);
-      return obj;
-    }));
-  }}
-  animate={({ scene }) => {
-    objects.forEach((obj, i) => {
-      /* movimiento base ---------------------------------------------------- */
-      obj.position.z -= 0.5;
-      obj.rotation.y -= 0.002 * Math.sign(i % 2 - 0.5);
-      obj.scale.y += 0.75;
-
-      /* ---- “destiny from center” (acercamiento suave) ------------------- */
-      const distanceFromCenter = (window.innerWidth / 2 - $mouse.x) / 200;
-
-      // log-mapping para obtener el destino (evita disparos lineales bruscos)
-      const destiny =
-        Math.log1p(Math.abs(distanceFromCenter)) * Math.sign(distanceFromCenter);
-
-      // interpolación suave hacia ese destino
-      obj.position.x = lerp(obj.position.x, destiny, 0.05);
-
-      /* limpieza ----------------------------------------------------------- */
-      if (obj.position.z < -obj.scale.y) {
-        objects.pop();
-        scene.remove(obj);
-        console.log("The thing was deleted");
-      }
-    });
-  }}
-/>
-
-<Loader callback={(hasLoaded: boolean) => {
-  setTimeout(() => {
-    console.log("hasLoaded", hasLoaded)
-    loaded.set(hasLoaded);
-  }, 250);
-}} />
-
-<Page>
-  <Centered>
-    <SoftTitle
-      text="Σxecutions"
-      appearDelay={2000}
-      offsetStrength={40}
-      lerpFactor={0.08}
-    />
-  </Centered>
-
-  <div class="disclaimer">
-    <a class="anchor" href="https://www.internationalrelocationpartner.com/">
-      <MarkdownText canReveal={$loaded}>
-        Subsidiary of International Relocation Partner LLC
-      </MarkdownText>
-    </a>
+<SmoothScrollWrapper>
+  <Canvas
+    setup={async (state: typeof canvasesState) => {
+      const { object3D } = await Model("./models/modern_vase/scene.gltf");
+  
+      objects = ("A" /* AO */.split("").map((_, i) => {
+        const obj = object3D.clone();
+        obj.position.y += 2.5;
+        obj.rotation.x = Math.PI / 2 + Math.PI * (i % 2);
+        obj.scale.set(the_scale * 2, the_scale * 2, the_scale * 2);
+        obj.position.z += 75 + the_scale / 4 + i * (the_scale / 2) + (the_scale / 4) * (i % 2);
+        
+        // for this specific modern_vase object
+        // obj.children[0].children[0].children[0].children[0].children.forEach((child) => {
+        //   child.material = new THREE.MeshBasicMaterial({ color: 0xf })
+        // });
+        
+        state.scene.add(obj);
+        return obj;
+      }));
+    }}
+    animate={({ scene }) => {
+      objects.forEach((obj, i) => {
+        /* movimiento base ---------------------------------------------------- */
+        obj.position.z -= 0.5;
+        obj.rotation.y -= 0.002 * Math.sign(i % 2 - 0.5);
+        obj.scale.y += 0.75;
+  
+        /* ---- “destiny from center” (acercamiento suave) ------------------- */
+        const distanceFromCenter = (window.innerWidth / 2 - $mouse.x) / 200;
+  
+        // log-mapping para obtener el destino (evita disparos lineales bruscos)
+        const destiny =
+          Math.log1p(Math.abs(distanceFromCenter)) * Math.sign(distanceFromCenter);
+  
+        // interpolación suave hacia ese destino
+        obj.position.x = lerp(obj.position.x, destiny, 0.05);
+  
+        /* limpieza ----------------------------------------------------------- */
+        if (obj.position.z < -obj.scale.y) {
+          objects.pop();
+          scene.remove(obj);
+          console.log("The thing was deleted");
+        }
+      });
+    }}
+  />
+  
+  <Loader callback={(hasLoaded: boolean) => {
+    setTimeout(() => {
+      console.log("hasLoaded", hasLoaded)
+      loaded.set(hasLoaded);
+    }, 250);
+  }} />
+  
+  <Page>
+    <Centered>
+      <SoftTitle
+        text="Σxecutions"
+        appearDelay={2000}
+        offsetStrength={40}
+        lerpFactor={0.08}
+      />
+    </Centered>
+  
+  </Page>
+  <div style="{$loaded ? '' : 'display: none'}">
+    <Content />
   </div>
-
-</Page>
-<div style="{$loaded ? '' : 'display: none'}">
-  <Content />
+</SmoothScrollWrapper>
+  
+<div class="disclaimer">
+  <a class="anchor" href="https://www.internationalrelocationpartner.com/">
+    <MarkdownText canReveal={$loaded}>
+      Subsidiary of International Relocation Partner LLC
+    </MarkdownText>
+  </a>
 </div>
 
 <style lang="scss">
@@ -207,8 +214,9 @@
     color: lightblue;
   }
   .disclaimer {
+    mix-blend-mode: exclusion;
     position: fixed;
-    bottom: calc(15px + (100vh - 90vh));
+    bottom: calc(15px);
     left: 0;
     right: 0;
     text-align: center;

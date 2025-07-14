@@ -55,7 +55,7 @@
         bottom: 0;
         user-select: none;
         width: 100vw;
-        height: 90vh;
+        height: 100vh;
         mix-blend-mode: screen;
         filter: invert(1);
         z-index: -1;
