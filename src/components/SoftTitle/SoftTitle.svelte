@@ -29,7 +29,7 @@
     // visibility flag (plain variable → reactive)
     let visible = writable(false);
 
-    // visible.subscribe((a) => console.log("a", a))
+    visible.subscribe((a) => console.log("a", a))
   
     let cleanup = () => {};
     onMount(() => {

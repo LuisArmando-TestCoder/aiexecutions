@@ -1,5 +1,6 @@
 <script>
   import { gsap } from 'gsap';
+    import SoftTitle from '../SoftTitle/SoftTitle.svelte';
 
   /**
    * Svelte action – fades & slides elements in when they enter the viewport
@@ -33,7 +34,6 @@
   background: linear-gradient(-45deg, #0a0a0a, #111111, #0d0d0d, #141414);
   background-size: 400% 400%;
   animation: gradientShift 18s ease-in-out infinite;
-  color: #fefeef;
 }
 
 @keyframes gradientShift {
@@ -47,7 +47,7 @@
 ───────────────────────────────────────── */
 .grid {
   z-index: 1;
-  background: var(--color-background);
+  background: var(--color-background-inversion);
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -66,7 +66,7 @@
 
 .text {
   padding: 5vw;
-  color: var(--color-background-inversion)
+  color: var(--color-background)
 }
 
 .image {
@@ -74,7 +74,7 @@
   background-size: cover;
   background-position: left;
   background-attachment: fixed;
-  filter: grayscale(1);
+  // filter: grayscale(1);
 }
 
 /* Example Pexels image backgrounds – swap for your own */
@@ -115,9 +115,11 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
 
 <article class="grid">
   <!-- Row 1 -->
-  <section class="row">
+  <section class="row" id="why">
     <div class="text">
-      <h1 use:reveal>Why AI Σxecutions?</h1>
+      <!-- <h1 use:reveal> -->
+        <SoftTitle text="Why AI Σxecutions?" />
+      <!-- </h1> -->
     </div>
     <div class="image image-1" aria-hidden="true"></div>
   </section>
@@ -136,7 +138,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
   </section>
 
   <!-- Row 3 -->
-  <section class="row">
+  <section class="row" id="how">
     <div class="text">
       <h2 use:reveal>How do we do it?</h2>
       <ol>
@@ -150,7 +152,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
   </section>
 
   <!-- Row 4 -->
-  <section class="row">
+  <section class="row" id="what">
     <div class="image image-4" aria-hidden="true"></div>
     <div class="text">
       <h2 use:reveal>What are we?</h2>

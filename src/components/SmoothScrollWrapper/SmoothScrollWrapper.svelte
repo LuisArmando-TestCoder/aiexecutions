@@ -66,6 +66,7 @@
     top: 0; left: 0;
     width: 100%;
     will-change: transform;
+    scroll-behavior: smooth;
   }
   .spacer { /* width/height set dynamically */ }
   </style>

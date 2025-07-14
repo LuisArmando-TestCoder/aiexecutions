@@ -15,6 +15,7 @@
   import Content from '../components/Content/Content.svelte';
     import SoftTitle from '../components/SoftTitle/SoftTitle.svelte';
     import SmoothScrollWrapper from '../components/SmoothScrollWrapper/SmoothScrollWrapper.svelte';
+    import Header from '../components/Header/Header.svelte';
 
   /* ------------------------------------------------------------------
    * State                                                              
@@ -105,6 +106,7 @@
 </script>
 <ChosenShader />
 <ThemeChanger visible={false} />
+<Header />
 
 <SmoothScrollWrapper>
   <Canvas
@@ -146,8 +148,8 @@
   
         /* limpieza ----------------------------------------------------------- */
         if (obj.position.z < -obj.scale.y) {
-          objects.pop();
           scene.remove(obj);
+          objects.pop();
           console.log("The thing was deleted");
         }
       });
