@@ -13,6 +13,7 @@
   import Centered from '../components/systems/wrappers/Centered/Centered.svelte';
   import MarkdownText from '../components/systems/texts/MarkdownText/MarkdownText.svelte';
   import Content from '../components/Content/Content.svelte';
+    import SoftTitle from '../components/SoftTitle/SoftTitle.svelte';
 
   /* ------------------------------------------------------------------
    * State                                                              
@@ -155,19 +156,14 @@
 }} />
 
 <Page>
-  {#key $loaded}
-    <Centered>
-      <div class="title-wrapper">
-        <div class="title">
-          <MarkdownText canReveal={$loaded}>Σxecutions</MarkdownText>
-        </div>
-        <!-- Shadow now moves via translate, not left/top -->
-        <div class="shadow title" style="transform: translate3d({$offset.dx}px, {$offset.dy}px, 0);">
-          <MarkdownText canReveal={$loaded}>Σxecutions</MarkdownText>
-        </div>
-      </div>
-    </Centered>
-  {/key}
+  <Centered>
+    <SoftTitle
+      text="Σxecutions"
+      appearDelay={2000}
+      offsetStrength={40}
+      lerpFactor={0.08}
+    />
+  </Centered>
 
   <div class="disclaimer">
     <a class="anchor" href="https://www.internationalrelocationpartner.com/">
@@ -212,7 +208,7 @@
   }
   .disclaimer {
     position: fixed;
-    bottom: 15px;
+    bottom: calc(15px + (100vh - 90vh));
     left: 0;
     right: 0;
     text-align: center;
