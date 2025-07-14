@@ -108,9 +108,7 @@
 <ChosenShader />
 <ThemeChanger visible={false} />
 <Header />
-
-<SmoothScrollWrapper>
-  <Canvas
+<Canvas
     setup={async (state: typeof canvasesState) => {
       const { object3D } = await Model("./models/modern_vase/scene.gltf");
   
@@ -156,7 +154,8 @@
       });
     }}
   />
-  
+
+<SmoothScrollWrapper>
   <Loader callback={(hasLoaded: boolean) => {
     setTimeout(() => {
       console.log("hasLoaded", hasLoaded)
