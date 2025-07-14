@@ -74,6 +74,7 @@
   background-size: cover;
   background-position: left;
   background-attachment: fixed;
+  filter: grayscale(1);
 }
 
 /* Example Pexels image backgrounds – swap for your own */
@@ -116,7 +117,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
   <!-- Row 1 -->
   <section class="row">
     <div class="text">
-      <h1 use:reveal>Why AI Executions?</h1>
+      <h1 use:reveal>Why AI Σxecutions?</h1>
     </div>
     <div class="image image-1" aria-hidden="true"></div>
   </section>
@@ -142,7 +143,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
         <li use:reveal>We take your ideas and build them into real systems, fast.</li>
         <li use:reveal>We organize and automate your business so it works without you.</li>
         <li use:reveal>We grow the business by multiplying your reach, without multiplying your work.</li>
-        <li use:reveal>We continuously refine and improve the system so it runs smoother, better, and stronger over time.</li>
+        <li use:reveal>We continuously refine and improve the system so it runs smoother, better, and more robust over time.</li>
       </ol>
     </div>
     <div class="image image-3" aria-hidden="true"></div>
@@ -153,7 +154,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
     <div class="image image-4" aria-hidden="true"></div>
     <div class="text">
       <h2 use:reveal>What are we?</h2>
-      <p use:reveal>We are a private equity firm. But instead of giving you money, we give you systems, automation, and execution, and then scale your business.</p>
+      <p use:reveal>We are a business scaling firm. But instead of giving you money, we give you systems, automation, and execution, and then scale your business.</p>
       <p use:reveal>Sure, capital scales effort, but systems—systems scale leverage.</p>
     </div>
   </section>
