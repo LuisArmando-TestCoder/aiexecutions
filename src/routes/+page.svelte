@@ -151,7 +151,7 @@
   setTimeout(() => {
     console.log("hasLoaded", hasLoaded)
     loaded.set(hasLoaded);
-  }, 1000);
+  }, 250);
 }} />
 
 <Page>
