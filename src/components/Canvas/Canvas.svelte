@@ -58,6 +58,7 @@
         height: 100vh;
         mix-blend-mode: screen;
         filter: invert(1);
+        z-index: -1;
     }
 
     canvas {

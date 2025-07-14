@@ -69,6 +69,7 @@
         background: var(--color-x-gradient);
         user-select: none;
         pointer-events: none;
+        --color: white;
     }
 
 	.loader-container {
@@ -89,13 +90,11 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		font-size: 14px;
-		color: white;
+		color: var(--color);
 		font-family: var(--font-title);
 		font-weight: bold;
         text-align: center;
 	}
-    $grey: white;
-    $blue: lightblue;
 
     @keyframes rotate {
         0% {
@@ -112,15 +111,15 @@
     @keyframes rotate2 {
         0% {
             transform: rotate(0deg);
-            border-top-color: $grey;
+            border-top-color: var(--color);
         }
         50% {
             transform: rotate(180deg);
-            border-top-color: $blue;
+            border-top-color: var(--color);
         }
         100% {
             transform: rotate(360deg);
-            border-top-color: $grey;
+            border-top-color: var(--color);
         }
     }
 
@@ -136,7 +135,7 @@
         text-align: center;
         font-family: "Tahoma";
         font-weight: lighter;
-        color: $grey;
+        color: var(--color);
         letter-spacing: 1.5px;
     }
 
@@ -170,25 +169,25 @@
     .loader1,
     .loader1 div {
         @include loaderDivMixin;
-        border-top-color: $grey;
-        border-bottom-color: $blue;
+        border-top-color: var(--color);
+        border-bottom-color: var(--color);
     }
 
     /*loader 2  */
     .loader2,
     .loader2 div {
         @include loaderDivMixin;
-        border-top-color: $blue;
-        border-left-color: $grey;
-        border-right-color: $grey;
+        border-top-color: var(--color);
+        border-left-color: var(--color);
+        border-right-color: var(--color);
     }
 
     /*loader 3  */
     .loader3,
     .loader3 div {
         @include loaderDivMixin;
-        border-top-color: $grey;
-        border-left-color: $blue;
+        border-top-color: var(--color);
+        border-left-color: var(--color);
         animation-timing-function: cubic-bezier(0.55, 0.38, 0.21, 0.88);
         animation-duration: 3s;
     }

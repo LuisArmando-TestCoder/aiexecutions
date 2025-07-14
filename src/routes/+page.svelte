@@ -12,10 +12,31 @@
   import Page from '../components/systems/wrappers/Page/Page.svelte';
   import Centered from '../components/systems/wrappers/Centered/Centered.svelte';
   import MarkdownText from '../components/systems/texts/MarkdownText/MarkdownText.svelte';
+  import Content from '../components/Content/Content.svelte';
 
+  /* ------------------------------------------------------------------
+   * State                                                              
+   * ----------------------------------------------------------------*/
   let lastScrollY = 0;
   const isScrollingDown = writable(false);
 
+  const the_scale = 200;
+  let objects: THREE.Object3D[] = [];
+  const loaded = writable(false);
+
+  /** Raw mouse position */
+  const mouse = writable<{ x: number; y: number }>({ x: 0, y: 0 });
+  /** Smoothly‑interpolated mouse (chases `mouse`) */
+  const smoothMouse = writable<{ x: number; y: number }>({ x: 0, y: 0 });
+  /** Offset from screen‑center derived from `smoothMouse` */
+  const offset = writable<{ dx: number; dy: number }>({ dx: 0, dy: 0 });
+
+  // util ­– linear interpolation
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  /* ------------------------------------------------------------------
+   * Scroll & mouse listeners                                           
+   * ----------------------------------------------------------------*/
   function handleScroll() {
     const currentScrollY = window.scrollY;
     let scrollingDownValue = false;
@@ -29,29 +50,56 @@
     lastScrollY = currentScrollY;
   }
 
-  const the_scale = 200;
-  let objects: THREE.Object3D[] = [];
-  const loaded = writable(false);
-  const mouse = writable<{ x: number; y: number }>({ x: 0, y: 0 });
+  let cleanup = () => {};
 
   onMount(() => {
-    if (browser) {
-      lastScrollY = window.scrollY;
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      window.addEventListener("mousemove", (event: MouseEvent) => {
-        mouse.set({ x: event.clientX, y: event.clientY });
+    if (!browser) return; // Guard against SSR
+
+    /* ---------------------------- Mouse -----------------------------*/
+    lastScrollY = window.scrollY;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    const onMove = (event: MouseEvent) => {
+      mouse.set({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mousemove", onMove, { passive: true });
+
+    /* ------ Animation loop that eases `smoothMouse` toward `mouse` --*/
+    let rawTarget = { x: 0, y: 0 };
+    const unsubMouse = mouse.subscribe(v => (rawTarget = v));
+
+    let smoothVal = { x: 0, y: 0 };
+    const unsubSmooth = smoothMouse.subscribe(v => (smoothVal = v));
+
+    function frame() {
+      // 1. Ease the "chaser" toward the raw mouse
+      smoothMouse.update(curr => ({
+        x: lerp(curr.x, rawTarget.x, 0.1),
+        y: lerp(curr.y, rawTarget.y, 0.1)
+      }));
+
+      // 2. Convert that to an offset from the viewport centre
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+
+      offset.set({
+        dx: (smoothVal.x - centerX) / 30, // tweak divisor for strength
+        dy: (smoothVal.y - centerY) / 30
       });
-    }
-  });
 
-  onDestroy(() => {
-    if (browser) {
+      requestAnimationFrame(frame);
+    }
+    frame();
+
+    /* -------------------------- Cleanup -----------------------------*/
+    cleanup = () => {
+      window.removeEventListener("mousemove", onMove);
       window.removeEventListener("scroll", handleScroll);
-    }
+      unsubMouse();
+      unsubSmooth();
+    };
   });
 
-  // util ­– linear interpolation
-  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  onDestroy(() => cleanup());
 </script>
 
 <ChosenShader />
@@ -100,25 +148,62 @@
 />
 
 <Loader callback={(hasLoaded: boolean) => {
-  setTimeout(() => loaded.set(hasLoaded), 1000);
+  setTimeout(() => {
+    console.log("hasLoaded", hasLoaded)
+    loaded.set(hasLoaded);
+  }, 1000);
 }} />
 
 <Page>
-  <Centered>
-    <MarkdownText canReveal={$loaded}>Σxecutions</MarkdownText>
-  </Centered>
-</Page>
+  {#key $loaded}
+    <Centered>
+      <div class="title-wrapper">
+        <div class="title">
+          <MarkdownText canReveal={$loaded}>Σxecutions</MarkdownText>
+        </div>
+        <!-- Shadow now moves via translate, not left/top -->
+        <div class="shadow title" style="transform: translate3d({$offset.dx}px, {$offset.dy}px, 0);">
+          <MarkdownText canReveal={$loaded}>Σxecutions</MarkdownText>
+        </div>
+      </div>
+    </Centered>
+  {/key}
 
-<div class="disclaimer">
-  <a class="anchor" href="https://www.internationalrelocationpartner.com/">
-    <MarkdownText canReveal={$loaded}>
-      Subsidiary of International Relocation Partner LLC
-    </MarkdownText>
-  </a>
-</div>
+  <div class="disclaimer">
+    <a class="anchor" href="https://www.internationalrelocationpartner.com/">
+      <MarkdownText canReveal={$loaded}>
+        Subsidiary of International Relocation Partner LLC
+      </MarkdownText>
+    </a>
+  </div>
+
+</Page>
+<Content />
 
 <style lang="scss">
   @use "./styles/everything.scss";
+
+  .title-wrapper {
+    position: relative;
+  }
+
+  .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    filter: blur(4px);
+    opacity: 0.4;
+    will-change: transform;
+    z-index: -1;
+  }
+
+  :global(.title) {
+    & :global(span span) {
+      font-size: min(10vw, 10vh) !important;
+      text-shadow: 1px 0 black;
+    }
+  }
 
   .anchor {
     color: lightblue;
