@@ -120,7 +120,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
 
 <article class="grid">
   <!-- Row 1 -->
-  <section class="row" id="why">
+  <section class="row">
     <div class="text">
       <!-- <h1 use:reveal> -->
         <SoftTitle text="Why AI Σxecutions?" />
@@ -130,7 +130,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
   </section>
 
   <!-- Row 2 -->
-  <section class="row">
+  <section class="row" id="why">
     <div class="image image-2" aria-hidden="true"></div>
     <div class="text">
       <ul>

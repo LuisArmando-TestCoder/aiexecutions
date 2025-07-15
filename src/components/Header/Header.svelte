@@ -1,5 +1,6 @@
 <script lang="ts">
     import { writable } from "svelte/store";
+    import scroll from "../scroll.ts";
   import MenuHalf from "../MenuHalf/MenuHalf.svelte";
   import ThemeChanger from "../ThemeChanger/ThemeChanger.svelte";
 
@@ -16,21 +17,33 @@
         <a
           class="menu-item hide-on-mobile"
           href="#why"
+          onclick={() => {
+            scroll("why")
+          }}
           >Why</a
         >
         <a
           class="menu-item hide-on-mobile"
-          href="#what"
-          >What</a
-        >
-        <a
-          class="menu-item hide-on-mobile"
           href="#how"
+          onclick={() => {
+            scroll("how")
+          }}
           >How</a
         >
         <a
           class="menu-item hide-on-mobile"
+          href="#what"
+          onclick={() => {
+            scroll("what")
+          }}
+          >What</a
+        >
+        <a
+          class="menu-item hide-on-mobile"
           href="#us"
+          onclick={() => {
+            scroll("us")
+          }}
           >Us</a
         >
         <section class="menu-x hide-on-desktop interactive">
