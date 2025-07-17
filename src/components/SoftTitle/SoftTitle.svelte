@@ -28,7 +28,7 @@
 </script>
 
 <div class="soft" style="top: {pushToRead ? -$smoothScrollTarget : 0}px; {pushToRead && !z ? 'z-index: -1;' : 'z-index: 1;'}">
-    <video muted autoplay loop class="video" src={videoURL}/>
+    <video playsinline muted={true} autoplay loop class="video" src={videoURL}/>
     <h1 class="title">
         <o id={random} style="left: {offset + $smoothScrollTarget * scaleSpeed}px">
             {text}
