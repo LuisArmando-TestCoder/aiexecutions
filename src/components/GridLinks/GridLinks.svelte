@@ -35,7 +35,12 @@
 <style lang="scss">
   .wrapper {
     max-width: 1024px;
-    margin: 25vh auto;
+    padding: 25vh 0;
+    display: flex;
+    justify-items: center;
+    place-content: center;
+    flex-flow: column;
+    margin: auto;
   }
 
   .grid {

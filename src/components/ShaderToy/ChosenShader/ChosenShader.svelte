@@ -10,8 +10,7 @@
 <style>
   .shader {
     filter: var(--bg-filter);
-    position: fixed;
-    z-index: -1;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;

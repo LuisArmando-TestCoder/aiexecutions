@@ -106,7 +106,6 @@
   onDestroy(() => cleanup());
 </script>
 
-<ChosenShader />
 <ThemeChanger visible={false} />
 <Header />
 <!-- <Canvas
@@ -172,7 +171,8 @@
     <Content />
   </div>
 
-  <div id="us">
+  <div id="us" class="us">
+    <ChosenShader />
     <GridLinks
       items={[
         { url: "https://aibanewsletter.club/", text: "Engagement AI" },
@@ -203,6 +203,10 @@
 
 <style lang="scss">
   @use "./styles/everything.scss";
+
+  .us {
+    position: relative;
+  }
 
   .title-wrapper {
     position: relative;
