@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount, onDestroy, afterUpdate } from 'svelte';
     import { writable } from 'svelte/store';
+    import { smoothScrollTarget } from './store.ts';
   
     // ——— Public props —————————————————————
     export let ease = 0.08;   // inertia factor
@@ -27,6 +28,7 @@
       current = lerp(current, target, ease);
       if (clamp) current = Math.round(current);
       smooth.set(current);
+      smoothScrollTarget.set(-current);
       contentEl.style.transform =
         axis === 'y'
           ? `translate3d(0, ${-current}px, 0)`

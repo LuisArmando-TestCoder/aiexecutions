@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as THREE from 'three';
+  import * as THREE from "three";
   import ChosenShader from "../components/ShaderToy/ChosenShader/ChosenShader.svelte";
   import { onMount, onDestroy } from "svelte";
   import { browser } from "$app/environment";
@@ -7,19 +7,19 @@
   import Loader from "../components/Loader/Loader.svelte";
   import ThemeChanger from "../components/ThemeChanger/ThemeChanger.svelte";
   import Canvas from "../components/Canvas/Canvas.svelte";
-  import Model from '../components/Canvas/Model.ts';
-  import canvasesState from 'scene-preset/lib/state/canvases.js';
-  import Page from '../components/systems/wrappers/Page/Page.svelte';
-  import Centered from '../components/systems/wrappers/Centered/Centered.svelte';
-  import MarkdownText from '../components/systems/texts/MarkdownText/MarkdownText.svelte';
-  import Content from '../components/Content/Content.svelte';
-    import SoftTitle from '../components/SoftTitle/SoftTitle.svelte';
-    import SmoothScrollWrapper from '../components/SmoothScrollWrapper/SmoothScrollWrapper.svelte';
-    import Header from '../components/Header/Header.svelte';
-    import GridLinks from '../components/GridLinks/GridLinks.svelte';
+  import Model from "../components/Canvas/Model.ts";
+  import canvasesState from "scene-preset/lib/state/canvases.js";
+  import Page from "../components/systems/wrappers/Page/Page.svelte";
+  import Centered from "../components/systems/wrappers/Centered/Centered.svelte";
+  import MarkdownText from "../components/systems/texts/MarkdownText/MarkdownText.svelte";
+  import Content from "../components/Content/Content.svelte";
+  import SoftTitle from "../components/SoftTitle/SoftTitle.svelte";
+  import SmoothScrollWrapper from "../components/SmoothScrollWrapper/SmoothScrollWrapper.svelte";
+  import Header from "../components/Header/Header.svelte";
+  import GridLinks from "../components/GridLinks/GridLinks.svelte";
 
   /* ------------------------------------------------------------------
-   * State                                                              
+   * State
    * ----------------------------------------------------------------*/
   let lastScrollY = 0;
   const isScrollingDown = writable(false);
@@ -39,7 +39,7 @@
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
   /* ------------------------------------------------------------------
-   * Scroll & mouse listeners                                           
+   * Scroll & mouse listeners
    * ----------------------------------------------------------------*/
   function handleScroll() {
     const currentScrollY = window.scrollY;
@@ -48,7 +48,7 @@
       scrollingDownValue = currentScrollY > lastScrollY && currentScrollY > 50;
     }
     if (currentScrollY < lastScrollY || currentScrollY <= 50) {
-       scrollingDownValue = false;
+      scrollingDownValue = false;
     }
     isScrollingDown.set(scrollingDownValue);
     lastScrollY = currentScrollY;
@@ -69,16 +69,16 @@
 
     /* ------ Animation loop that eases `smoothMouse` toward `mouse` --*/
     let rawTarget = { x: 0, y: 0 };
-    const unsubMouse = mouse.subscribe(v => (rawTarget = v));
+    const unsubMouse = mouse.subscribe((v) => (rawTarget = v));
 
     let smoothVal = { x: 0, y: 0 };
-    const unsubSmooth = smoothMouse.subscribe(v => (smoothVal = v));
+    const unsubSmooth = smoothMouse.subscribe((v) => (smoothVal = v));
 
     function frame() {
       // 1. Ease the "chaser" toward the raw mouse
-      smoothMouse.update(curr => ({
+      smoothMouse.update((curr) => ({
         x: lerp(curr.x, rawTarget.x, 0.1),
-        y: lerp(curr.y, rawTarget.y, 0.1)
+        y: lerp(curr.y, rawTarget.y, 0.1),
       }));
 
       // 2. Convert that to an offset from the viewport centre
@@ -87,7 +87,7 @@
 
       offset.set({
         dx: (smoothVal.x - centerX) / 30, // tweak divisor for strength
-        dy: (smoothVal.y - centerY) / 30
+        dy: (smoothVal.y - centerY) / 30,
       });
 
       requestAnimationFrame(frame);
@@ -105,10 +105,11 @@
 
   onDestroy(() => cleanup());
 </script>
+
 <ChosenShader />
 <ThemeChanger visible={false} />
 <Header />
-<Canvas
+<!-- <Canvas
     setup={async (state: typeof canvasesState) => {
       const { object3D } = await Model("./models/modern_vase/scene.gltf");
   
@@ -153,41 +154,45 @@
         }
       });
     }}
-  />
+  /> -->
 
 <SmoothScrollWrapper>
-  <Loader callback={(hasLoaded: boolean) => {
-    setTimeout(() => {
-      console.log("hasLoaded", hasLoaded)
-      loaded.set(hasLoaded);
-    }, 250);
-  }} />
-  
-  <Page>
-    <Centered>
-      <SoftTitle
-        text="Σxecutions"
-        appearDelay={2000}
-        offsetStrength={40}
-        lerpFactor={0.08}
-      />
-    </Centered>
-  
-  </Page>
-  <div style="{$loaded ? '' : 'display: none'}">
+  <Loader
+    callback={(hasLoaded: boolean) => {
+      setTimeout(() => {
+        console.log("hasLoaded", hasLoaded);
+        loaded.set(hasLoaded);
+      }, 250);
+    }}
+  />
+
+  <SoftTitle pushToRead={true} text="Σxecutions" />
+
+  <div style={$loaded ? "" : "display: none"}>
     <Content />
   </div>
 
   <div id="us">
-    <GridLinks items={[
-      { url: "https://aibanewsletter.club/", text: "Engagement AI" },
-      { url: "https://github.com/LuisArmando-TestCoder/scientia", text: "AI Philosopher" },
-      { url: "https://github.com/LuisArmando-TestCoder/The-Equalitarian", text: "Recursive Maths" },
-      { url: "https://github.com/LuisArmando-TestCoder/scene-preset", text: "3D Web Preset" },
-    ]}/>
+    <GridLinks
+      items={[
+        { url: "https://aibanewsletter.club/", text: "Engagement AI" },
+        {
+          url: "https://github.com/LuisArmando-TestCoder/scientia",
+          text: "AI Philosopher",
+        },
+        {
+          url: "https://github.com/LuisArmando-TestCoder/The-Equalitarian",
+          text: "Recursive Maths",
+        },
+        {
+          url: "https://github.com/LuisArmando-TestCoder/scene-preset",
+          text: "3D Web Preset",
+        },
+      ]}
+    />
   </div>
 </SmoothScrollWrapper>
-  
+
 <div class="disclaimer">
   <a class="anchor" href="https://www.internationalrelocationpartner.com/">
     <MarkdownText canReveal={$loaded}>

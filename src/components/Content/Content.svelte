@@ -46,6 +46,7 @@
    GRID LAYOUT
 ───────────────────────────────────────── */
 .grid {
+  box-shadow: 0 0 100px;
   z-index: 1;
   background: var(--color-background-inversion);
   display: flex;
@@ -122,9 +123,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
   <!-- Row 1 -->
   <section class="row">
     <div class="text">
-      <!-- <h1 use:reveal> -->
-        <SoftTitle text="Why AI Σxecutions?" />
-      <!-- </h1> -->
+      <h2 use:reveal>Why AI Σxecutions?</h2>
     </div>
     <div class="image image-1" aria-hidden="true"></div>
   </section>
