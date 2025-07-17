@@ -5,10 +5,11 @@
     import { smoothScrollTarget } from "../SmoothScrollWrapper/store.ts";
 
     export let scaleSpeed = 1;
-    export let videoURL = "https://videos.pexels.com/video-files/4040947/4040947-uhd_2560_1440_30fps.mp4"
+    export let videoURL = "https://videos.pexels.com/video-files/31196472/13325298_2560_1440_25fps.mp4"
     export let direction = 1
     export let offset = 0;
     export let pushToRead = false;
+    export let z = false;
     let w = writable({});
     let d = writable({});
     let random = writable("");
@@ -26,7 +27,7 @@
     export let text: string = "Σxecutions";
 </script>
 
-<div class="soft" style="top: {pushToRead ? -$smoothScrollTarget : 0}px; {pushToRead ? 'z-index: -1;' : ''}">
+<div class="soft" style="top: {pushToRead ? -$smoothScrollTarget : 0}px; {pushToRead && !z ? 'z-index: -1;' : 'z-index: 1;'}">
     <video muted autoplay loop class="video" src={videoURL}/>
     <h1 class="title">
         <o id={random} style="left: {offset + $smoothScrollTarget * scaleSpeed}px">
