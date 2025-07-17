@@ -41,7 +41,7 @@
             (offset / $w.innerHeight) + 
             ($d?.getElementById?.(random)?.offsetWidth / $w.innerWidth) 
             / scaleSpeed
-        ) * 65
+        ) * 25
     : 0
 }vh;"/>
 
