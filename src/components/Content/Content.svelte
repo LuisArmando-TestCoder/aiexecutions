@@ -124,6 +124,7 @@ p { margin-bottom: 1.5em; line-height: 1.6; }
   <section class="row">
     <div class="text">
       <h2 use:reveal>Why AI Σxecutions?</h2>
+      <SoftTitle text="Why?" offset={-1000} scaleSpeed={-.5} />
     </div>
     <div class="image image-1" aria-hidden="true"></div>
   </section>
