@@ -188,6 +188,14 @@
           url: "https://github.com/LuisArmando-TestCoder/scene-preset",
           text: "3D Web Preset",
         },
+        {
+          url: "https://github.com/LuisArmando-TestCoder/rules/tree/master",
+          text: "Truth tables"
+        },
+        {
+          url: "https://github.com/LuisArmando-TestCoder/people-network",
+          text: "People Do Network"
+        }
       ]}
     />
   </div>
