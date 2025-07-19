@@ -6,7 +6,7 @@
   onMount(() => {
     const storedTheme = localStorage.getItem("theme");
     if (storedTheme) {
-      isDarkTheme.set(storedTheme === "light");
+      isDarkTheme.set(storedTheme === "dark");
     }
     updateTheme();
 
